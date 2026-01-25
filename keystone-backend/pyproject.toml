@@ -1,7 +1,7 @@
 [project]
 name = "keystone-backend"
 version = "0.1.0"
-description = "Бекенд для трекера привычек KeyStone"
+description = "Бэкенд для трекера привычек KeyStone"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
