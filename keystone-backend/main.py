@@ -6,7 +6,8 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import AppSettings, get_app_settings
-from app.core import database_manager, DatabaseManager, get_db
+from app.database import database_manager, get_db
+from app.users import user_routes
 
 app_settings: AppSettings = get_app_settings()
 
@@ -41,3 +42,5 @@ async def status_page(db_session: AsyncSession = Depends(get_db)):
         result["database_error"] = str(exc)
 
     return result
+
+app.include_router(user_routes)

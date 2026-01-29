@@ -3,7 +3,7 @@ from typing import Any, AsyncGenerator
 from pydantic import PostgresDsn
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
-from .config import AppSettings, get_app_settings
+from app.core.config import get_app_settings, AppSettings
 
 app_settings: AppSettings = get_app_settings()
 
@@ -47,7 +47,3 @@ class DatabaseManager:
             self._session = None
 
 database_manager = DatabaseManager(app_settings.DATABASE_URL)
-
-async def get_db():
-    async for session in database_manager.get_session():
-        yield session
