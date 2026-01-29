@@ -3,7 +3,8 @@
 from datetime import date
 from functools import lru_cache
 
-from pydantic import field_validator
+from pydantic import field_validator, PostgresDsn
+from pydantic_core.core_schema import ValidationInfo
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from .validators import validate_app_version
@@ -17,6 +18,14 @@ class AppSettings(BaseSettings):
         APP_NAME (str): Название приложения.
         APP_VERSION (str): Версия приложения.
 
+        DEBUG (bool): Флаг режима отладки.
+
+        DATABASE_HOST (str): Хост базы данных.
+        DATABASE_PORT (int): Порт базы данных.
+        DATABASE_NAME (str): Название базы данных.
+        DATABASE_USER (str): Имя пользователя базы данных.
+        DATABASE_PASSWORD (str): Пароль пользователя базы данных.
+
     Examples:
         >>> # Создание кешируемой функции получения настроек приложения
         >>> @lru_cache()
@@ -28,6 +37,15 @@ class AppSettings(BaseSettings):
 
     APP_NAME: str = "KeyStone API"
     APP_VERSION: str = ""
+
+    DEBUG: bool = False
+
+    DATABASE_HOST: str = "localhost"
+    DATABASE_PORT: int = 5432
+    DATABASE_NAME: str = "keystone_db"
+    DATABASE_USER: str = "postgres"
+    DATABASE_PASSWORD: str = "postgres"
+    DATABASE_URL: PostgresDsn | None = None
 
     @field_validator("APP_VERSION", mode="before")
     @classmethod
@@ -60,6 +78,31 @@ class AppSettings(BaseSettings):
             (str): Корректная версия приложения.
         """
         return validate_app_version(value)
+
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def create_database_url(cls, value: PostgresDsn | None, values: ValidationInfo) -> PostgresDsn:
+        """
+        Создает URL базы данных, если он не задан в настройках.
+
+        Args:
+            value (PostgresDsn | None): URL базы данных.
+            values (ValidationInfo): Значения других полей конфигурации.
+
+        Returns:
+            (PostgresDsn): URL базы данных.
+        """
+        if value:
+            return value
+        
+        return PostgresDsn.build(
+            scheme="postgresql+asyncpg",
+            host=values.data.get("DATABASE_HOST"),
+            port=values.data.get("DATABASE_PORT"),
+            username=values.data.get("DATABASE_USER"),
+            password=values.data.get("DATABASE_PASSWORD"),
+            path=values.data.get('DATABASE_NAME'),
+        )
 
 
 @lru_cache()

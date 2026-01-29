@@ -1,7 +1,7 @@
 """Модуль валидаторов параметров конфигурации."""
 
 from . import exceptions as exc
-from .consts import APP_VERSION_LENGTH, APP_VERSION_PART_LENGTH
+from .consts import APP_VERSION_LENGTH, APP_VERSION_PART_LENGTH, APP_VERSION_PART_DELIMITER
 
 
 def validate_app_version(app_version: str) -> str:
@@ -31,10 +31,10 @@ def validate_app_version(app_version: str) -> str:
     if not isinstance(app_version, str):
         raise exc.VersionIsNotStringException()
 
-    if "." not in app_version:
+    if APP_VERSION_PART_DELIMITER not in app_version:
         raise exc.VersionIsNotValidException()
 
-    version_parts: list[str] = app_version.split(".")
+    version_parts: list[str] = app_version.split(APP_VERSION_PART_DELIMITER)
 
     if len(version_parts) != APP_VERSION_LENGTH:
         raise exc.VersionIsNotValidException()

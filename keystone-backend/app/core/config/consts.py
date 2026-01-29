@@ -4,3 +4,5 @@
 APP_VERSION_LENGTH: int = 3
 # Длинна составной части версии приложения
 APP_VERSION_PART_LENGTH: int = 2
+# Разделитель составных частей версии приложения
+APP_VERSION_PART_DELIMITER: str = "."
