@@ -1,0 +1,14 @@
+[FORMAT]
+# Максимальное количество символов в строке
+max-line-length = 120
+
+# Дополнительные настройки форматирования
+max-module-lines = 1000
+indent-string = "    "  # 4 пробела
+single-line-if-stmt = no
+
+[MASTER]
+ignore-paths=app/tests/
+
+[MESSAGES CONTROL]
+disable=import-error

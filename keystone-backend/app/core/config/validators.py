@@ -1,7 +1,7 @@
 """Модуль валидаторов параметров конфигурации."""
 
 from . import exceptions as exc
-from .consts import APP_VERSION_LENGTH, APP_VERSION_PART_LENGTH, APP_VERSION_PART_DELIMITER
+from .consts import APP_VERSION_LENGTH, APP_VERSION_PART_DELIMITER, APP_VERSION_PART_LENGTH
 
 
 def validate_app_version(app_version: str) -> str:

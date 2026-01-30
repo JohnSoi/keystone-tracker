@@ -3,7 +3,7 @@
 from datetime import date
 from functools import lru_cache
 
-from pydantic import field_validator, PostgresDsn
+from pydantic import PostgresDsn, field_validator
 from pydantic_core.core_schema import ValidationInfo
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -38,6 +38,7 @@ class AppSettings(BaseSettings):
         >>> def get_app_settings_cache() -> AppSettings:
         ...     return AppSettings()
     """
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore", case_sensitive=True)
 
     APP_NAME: str = "KeyStone API"
@@ -50,7 +51,7 @@ class AppSettings(BaseSettings):
     DATABASE_NAME: str = "keystone_db"
     DATABASE_USER: str = "postgres"
     DATABASE_PASSWORD: str = "postgres"
-    DATABASE_URL: PostgresDsn | None = None
+    DATABASE_URL: PostgresDsn | str = ""
 
     SECRET_KEY: str = "your-secret-key-change-in-production"
     ALGORITHM: str = "HS256"
@@ -103,14 +104,14 @@ class AppSettings(BaseSettings):
         """
         if value:
             return value
-        
+
         return PostgresDsn.build(
             scheme="postgresql+asyncpg",
             host=values.data.get("DATABASE_HOST"),
             port=values.data.get("DATABASE_PORT"),
             username=values.data.get("DATABASE_USER"),
             password=values.data.get("DATABASE_PASSWORD"),
-            path=values.data.get('DATABASE_NAME'),
+            path=values.data.get("DATABASE_NAME"),
         )
 
 

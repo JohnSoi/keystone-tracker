@@ -1,11 +1,34 @@
+"""Модуль валидаторов для работы с пользователями."""
+
 import re
 from datetime import date
 
 from .consts import EMAIL_VALIDATION_EXP, MIN_USER_AGE
-from .exceptions import NotValidEmailException, InvalidBirthDateException, FutureBirthDateException, NotAllowedAgeException
+from .exceptions import (
+    FutureBirthDateException,
+    InvalidBirthDateException,
+    NotAllowedAgeException,
+    NotValidEmailException,
+)
 
 
 def validate_email(email: str) -> str:
+    """
+    Валидация email.
+
+    Args:
+        email (str): Указанный email.
+
+    Returns:
+        (str): Валидированный email.
+
+    Examples:
+        >>> validate_email("test@test.com") # True
+        >>> validate_email("test") # False
+
+    Raises:
+        NotValidEmailException: Если email не валиден.
+    """
     if not email or not isinstance(email, str) or not re.match(EMAIL_VALIDATION_EXP, email):
         raise NotValidEmailException()
 
@@ -13,6 +36,24 @@ def validate_email(email: str) -> str:
 
 
 def validate_birth_date(birth_date: date | str) -> date:
+    """
+    Валидация даты рождения.
+
+    Args:
+        birth_date (date | str): Указанная дата рождения.
+
+    Returns:
+        (date): Валидированная дата рождения.
+
+    Examples:
+        >>> validate_birth_date("1990-01-01") # True
+        >>> validate_birth_date("test") # False
+
+    Raises:
+        InvalidBirthDateException: Если дата не валидна.
+        FutureBirthDateException: Если дата в будущем.
+        NotAllowedAgeException: Если пользователю меньше 18 лет.
+    """
     if not birth_date or not isinstance(birth_date, date):
         raise InvalidBirthDateException()
 

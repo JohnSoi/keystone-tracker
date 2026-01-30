@@ -1,6 +1,7 @@
 import pytest
 
-from app.core.config import validators, exceptions as exc
+from app.core.config import exceptions as exc
+from app.core.config import validators
 
 
 def test_validate_app_version_valid():
