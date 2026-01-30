@@ -16,3 +16,8 @@ class NotValidEntityException(BaseHttpException):
 class EntityConflictException(BaseHttpException):
     _STATUS_CODE = status.HTTP_409_CONFLICT
     _MESSAGE = "Запись уже существует"
+
+
+class AuthException(BaseHttpException):
+    _STATUS_CODE = status.HTTP_401_UNAUTHORIZED
+    _MESSAGE = "Ошибка авторизации"

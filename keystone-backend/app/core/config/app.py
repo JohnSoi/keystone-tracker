@@ -20,6 +20,11 @@ class AppSettings(BaseSettings):
 
         DEBUG (bool): Флаг режима отладки.
 
+        SECRET_KEY (str): Секретный ключ для шифрования токенов.
+            Используется для подписи JWT токенов.
+        ALGORITHM (str): Алгоритм шифрования токенов.
+        ACCESS_TOKEN_EXPIRE_MINUTES (int): Время жизни токена в минутах.
+
         DATABASE_HOST (str): Хост базы данных.
         DATABASE_PORT (int): Порт базы данных.
         DATABASE_NAME (str): Название базы данных.
@@ -46,6 +51,10 @@ class AppSettings(BaseSettings):
     DATABASE_USER: str = "postgres"
     DATABASE_PASSWORD: str = "postgres"
     DATABASE_URL: PostgresDsn | None = None
+
+    SECRET_KEY: str = "your-secret-key-change-in-production"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     @field_validator("APP_VERSION", mode="before")
     @classmethod

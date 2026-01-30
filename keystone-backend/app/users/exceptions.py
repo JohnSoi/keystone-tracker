@@ -1,4 +1,4 @@
-from app.core import NotValidEntityException, EntityConflictException
+from app.core import NotValidEntityException, EntityConflictException, AuthException
 from .consts import MIN_USER_AGE
 
 
@@ -25,3 +25,12 @@ class LoginConflictException(EntityConflictException):
 class EmailConflictException(EntityConflictException):
     def __init__(self, email: str) -> None:
         super().__init__(f'Email "{email}" уже занят')
+
+
+class LoginNotFoundException(AuthException):
+    def __init__(self, login: str) -> None:
+        super().__init__(f'Пользователь с логином "{login}" не найден')
+
+
+class PasswordIncorrectException(AuthException):
+    _MESSAGE = "Неверный пароль. Попробуйте снова"
