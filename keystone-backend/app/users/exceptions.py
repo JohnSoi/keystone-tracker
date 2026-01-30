@@ -1,4 +1,4 @@
-from app.core import NotValidEntityException
+from app.core import NotValidEntityException, EntityConflictException
 from .consts import MIN_USER_AGE
 
 
@@ -16,3 +16,12 @@ class FutureBirthDateException(NotValidEntityException):
 
 class NotAllowedAgeException(NotValidEntityException):
     _MESSAGE = f"Возраст не подходит для регистрации. Вам должно быть не менее {MIN_USER_AGE} лет"
+
+class LoginConflictException(EntityConflictException):
+    def __init__(self, login: str) -> None:
+        super().__init__(f'Логин "{login}" уже занят')
+
+
+class EmailConflictException(EntityConflictException):
+    def __init__(self, email: str) -> None:
+        super().__init__(f'Email "{email}" уже занят')

@@ -11,3 +11,8 @@ class BaseHttpException(HTTPException):
 class NotValidEntityException(BaseHttpException):
     _STATUS_CODE = status.HTTP_422_UNPROCESSABLE_ENTITY
     _MESSAGE = "Некорректные данные в запросе"
+
+
+class EntityConflictException(BaseHttpException):
+    _STATUS_CODE = status.HTTP_409_CONFLICT
+    _MESSAGE = "Запись уже существует"
