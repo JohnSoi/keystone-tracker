@@ -1,13 +1,14 @@
 """Основной модуль приложения."""
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import AppSettings, get_app_settings
-from app.database import database_manager, get_db
-from app.users import user_routes
+from app.core.database import database_manager, get_db
+from app.users import user_routes, UserModel, get_current_user
 
 app_settings: AppSettings = get_app_settings()
 
@@ -20,6 +21,29 @@ async def lifespan(_: FastAPI) -> None:
 
 
 app: FastAPI = FastAPI(title=app_settings.APP_NAME, version=app_settings.APP_VERSION, lifespan=lifespan)
+
+
+@app.middleware("http")
+async def add_auth_user_data(request: Request, call_next):
+    try:
+        auth_data = request.headers.get("Authorization")
+
+        if not auth_data:
+            return await call_next(request)
+
+        db: AsyncSession = await anext(get_db())
+        scheme, credentials = auth_data.split(" ")
+        credentials: HTTPAuthorizationCredentials = HTTPAuthorizationCredentials(scheme=scheme, credentials=str(credentials))
+        print(credentials)
+        user: UserModel = await get_current_user(credentials, db)
+        request.state.user = user
+    except HTTPException as exc:
+        if exc.status_code == status.HTTP_401_UNAUTHORIZED:
+            return await call_next(request)
+        else:
+            raise exc
+
+    return await call_next(request)
 
 
 @app.get("/status", tags=["status"])

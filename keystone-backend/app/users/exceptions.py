@@ -1,6 +1,6 @@
 """Модуль исключений для работы с пользователями."""
 
-from app.core import AuthException, EntityConflictException, NotValidEntityException
+from app.core import AuthException, EntityConflictException, NotValidEntityException, ForbiddenException
 
 from .consts import MIN_USER_AGE
 
@@ -50,7 +50,31 @@ class LoginNotFoundException(AuthException):
         super().__init__(f'Пользователь с логином "{login}" не найден')
 
 
+class EmailNotFoundException(NotValidEntityException):
+    def __init__(self, email: str) -> None:
+        """Исключение для email, которого нет в базе."""
+        super().__init__(f'Пользователь с email "{email}" не найден')
+
+
 class PasswordIncorrectException(AuthException):
     """Исключение для неверного пароля."""
 
     _MESSAGE = "Неверный пароль. Попробуйте снова"
+
+
+class DeletedUserException(AuthException):
+    """Исключение для удаленного пользователя."""
+
+    _MESSAGE = "Пользователь удален. Воспользуйтесь восстановлением доступа"
+
+
+class InvalidTokenException(AuthException):
+    """Исключение для невалидного токена."""
+
+    _MESSAGE = "Невалидный токен доступа"
+
+
+class ForbiddenUserException(ForbiddenException):
+    """Исключение для запрещенного действия."""
+
+    _MESSAGE = "Данному пользователю запрещено совершать данное действие"

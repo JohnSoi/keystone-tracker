@@ -45,3 +45,24 @@ class AuthException(BaseHttpException):
 
     _STATUS_CODE = status.HTTP_401_UNAUTHORIZED
     _MESSAGE = "Ошибка авторизации"
+
+
+class NotFoundException(BaseHttpException):
+    """Исключение для не найденных записей."""
+
+    _STATUS_CODE = status.HTTP_404_NOT_FOUND
+    _MESSAGE = "Запись не найдена"
+
+
+class ForbiddenException(BaseHttpException):
+    """Исключение для запрета доступа."""
+
+    _STATUS_CODE = status.HTTP_403_FORBIDDEN
+    _MESSAGE = "Доступ запрещен"
+
+
+class BadRequestException(BaseHttpException):
+    """Исключение для некорректных запросов."""
+
+    _STATUS_CODE = status.HTTP_400_BAD_REQUEST
+    _MESSAGE = "Некорректный запрос"

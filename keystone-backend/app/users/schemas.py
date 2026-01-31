@@ -44,7 +44,18 @@ class UserPersonData(BaseModel):
         return validate_birth_date(value)
 
 
-class UserAccessData(BaseModel):
+class UserPasswordData(BaseModel):
+    """
+    Схема данных для изменения пароля пользователя.
+
+    Attributes:
+        password (str): Пароль пользователя.
+    """
+
+    password: str = Field(..., min_length=8, max_length=50)
+
+
+class UserAccessData(UserPasswordData):
     """
     Схема данных для доступа пользователя.
 
@@ -54,7 +65,6 @@ class UserAccessData(BaseModel):
     """
 
     login: str = Field(..., min_length=3, max_length=32)
-    password: str = Field(..., min_length=8, max_length=50)
 
 
 class UserPublicData(UUIDSchemaMixin, UserPersonData):

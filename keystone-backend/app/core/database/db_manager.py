@@ -41,7 +41,7 @@ class DatabaseManager:
         Examples:
             >>> from contextlib import asynccontextmanager
             >>> from fastapi import FastAPI
-            >>> from app.database import database_manager
+            >>> from app.core.database import database_manager
             >>>
             >>> @asynccontextmanager
             >>> async def lifespan(_: FastAPI) -> None:
@@ -67,7 +67,7 @@ class DatabaseManager:
             (AsyncGenerator[Any, Any]): Асинхронная сессия базы данных.
 
         Examples:
-            >>> from app.database import database_manager
+            >>> from app.core.database import database_manager
             >>> async def get_db():
             ...     async for ex_session in database_manager.get_session():
             ...         yield ex_session
@@ -95,7 +95,7 @@ class DatabaseManager:
         Examples:
             >>> from contextlib import asynccontextmanager
             >>> from fastapi import FastAPI
-            >>> from app.database import database_manager
+            >>> from app.core.database import database_manager
             >>>
             >>> @asynccontextmanager
             >>> async def lifespan(_: FastAPI) -> None:

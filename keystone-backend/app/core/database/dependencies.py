@@ -17,7 +17,7 @@ async def get_db() -> AsyncGenerator[AsyncSession, Any]:
     Examples:
         >>> from fastapi import Depends
         >>> from app.core import BaseSchema
-        >>> from app.database import get_db
+        >>> from app.core.database import get_db
         >>>
         >>> async def user_register(user_data: BaseSchema, db: AsyncSession = Depends(get_db)):
         ...     ...

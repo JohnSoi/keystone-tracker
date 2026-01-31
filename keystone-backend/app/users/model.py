@@ -6,7 +6,7 @@ from datetime import date
 from sqlalchemy import Date, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.database import BaseModel, SoftDeleteMixin, TimestampMixin, UUIDMixin
+from app.core.database import BaseModel, SoftDeleteMixin, TimestampMixin, UUIDMixin
 
 
 class User(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin):

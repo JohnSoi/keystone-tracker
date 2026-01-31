@@ -4,6 +4,8 @@
 from sqlalchemy import Integer
 from sqlalchemy.orm import Mapped, declarative_base, declared_attr, mapped_column
 
+from app.core.utils import camel_case_to_snake_case
+
 
 class CustomModel:
     """
@@ -12,6 +14,8 @@ class CustomModel:
     Attributes:
         id (int): Идентификатор сущности.
     """
+
+    __allow_unmapped__ = True
 
     @classmethod
     @declared_attr
@@ -22,7 +26,7 @@ class CustomModel:
         Returns:
             (str): Имя таблицы.
         """
-        return cls.__name__.lower() + "s"
+        return camel_case_to_snake_case(cls.__name__) + "s"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
 
