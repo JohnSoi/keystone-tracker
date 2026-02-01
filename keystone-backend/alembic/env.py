@@ -11,6 +11,7 @@ from app.core.database import BaseModel
 from app.core.config import get_app_settings
 from app.users import UserModel
 from app.access_restore import AccessRestoreModel
+from app.confirmation import ConfirmationModel
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

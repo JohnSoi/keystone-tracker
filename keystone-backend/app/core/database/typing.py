@@ -1,5 +1,8 @@
+"""Модуль с типами."""
+
 from typing import TypeVar
 
-from app.core.database import BaseModel
+from .model import BaseModel
 
-ModelType = TypeVar("ModelType", bound=BaseModel)
+# Тип модели.
+DataModel = TypeVar("DataModel", bound=BaseModel)

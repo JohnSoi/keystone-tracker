@@ -42,3 +42,8 @@ class User(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin):
     email: Mapped[str] = mapped_column(String(50), nullable=False, unique=True, index=True)
 
     verified_at: Mapped[date | None] = mapped_column(Date, nullable=True)
+
+    @property
+    def full_name(self) -> str:
+        """Возвращает полное имя пользователя."""
+        return f"{self.surname} {self.name}" + (f" {self.patronymic}" if self.patronymic else "")

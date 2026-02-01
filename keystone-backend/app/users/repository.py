@@ -1,7 +1,6 @@
 """Модуль репозитория пользователя."""
 
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core import hash_password
 from app.core.database import BaseRepository
@@ -28,6 +27,7 @@ class UserRepository(BaseRepository[UserModel]):
             >>> from fastapi import Depends
             >>> from app.core import BaseSchema
             >>> from app.core.database import get_db
+            >>> from sqlalchemy.ext.asyncio import AsyncSession
             >>>
             >>> async def user_login(payload: BaseSchema, db: AsyncSession = Depends(get_db)) -> BaseSchema:
             ...     user: UserModel = await UserRepository().get_by_login(payload.login)
@@ -54,6 +54,7 @@ class UserRepository(BaseRepository[UserModel]):
             >>> from fastapi import Depends
             >>> from app.core import BaseSchema
             >>> from app.core.database import get_db
+            >>> from sqlalchemy.ext.asyncio import AsyncSession
             >>>
             >>> async def user_login(payload: BaseSchema, db: AsyncSession = Depends(get_db)) -> BaseSchema:
             ...     user: UserModel = await UserRepository().get_by_email(payload.email)

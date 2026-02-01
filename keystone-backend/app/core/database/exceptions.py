@@ -1,7 +1,8 @@
 """Модуль исключений при работе с БД."""
+
 from uuid import UUID
 
-from app.core import BaseHttpException, NotFoundException, NotValidEntityException
+from app.core.exceptions import BaseHttpException, NotFoundException, NotValidEntityException
 
 
 class SessionNotCreatedException(BaseHttpException):
@@ -23,10 +24,14 @@ class EntityNotUUIDException(BaseHttpException):
 
 
 class EntityNotFoundException(NotFoundException):
+    """Исключение, возникающее при отсутствии сущности в БД."""
+
     def __init__(self, entity_id: int) -> None:
         super().__init__(f"Сущность с id {entity_id} не найдена")
 
 
 class EntityNotFoundByUUIDException(NotFoundException):
+    """Исключение, возникающее при отсутствии сущности в БД по UUID."""
+
     def __init__(self, entity_uuid: UUID) -> None:
         super().__init__(f"Сущность с uuid {entity_uuid} не найдена")

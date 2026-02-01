@@ -1,6 +1,6 @@
 """Модуль исключений для работы с пользователями."""
 
-from app.core import AuthException, EntityConflictException, NotValidEntityException, ForbiddenException
+from app.core import AuthException, EntityConflictException, ForbiddenException, NotValidEntityException
 
 from .consts import MIN_USER_AGE
 
@@ -51,8 +51,9 @@ class LoginNotFoundException(AuthException):
 
 
 class EmailNotFoundException(NotValidEntityException):
+    """Исключение для email, которого нет в базе."""
+
     def __init__(self, email: str) -> None:
-        """Исключение для email, которого нет в базе."""
         super().__init__(f'Пользователь с email "{email}" не найден')
 
 
@@ -78,3 +79,9 @@ class ForbiddenUserException(ForbiddenException):
     """Исключение для запрещенного действия."""
 
     _MESSAGE = "Данному пользователю запрещено совершать данное действие"
+
+
+class UserAlreadyVerifiedException(EntityConflictException):
+    """Исключение для уже подтвержденного пользователя."""
+
+    _MESSAGE = "Email данного пользователя уже подтвержден"

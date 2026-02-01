@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Восстановление доступа в {{ app_name }}</title>
+</head>
+<body>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .keystone-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .keystone-header, .keystone-content {
+            width: 100%;
+            background-color: lightgrey;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+        .keystone-header p {
+            margin-top: 30px;
+        }
+        .keystone-content a {
+            padding: 10px 20px;
+            margin-top: 30px;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        .keystone-content a:hover {
+            background-color: #024c9b;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <div class="keystone-wrapper">
+        <div class="keystone-header">
+            <h1>Восстановление доступа в "{{ app_name }}"</h1>
+            <p>Приветствую тебя, {{ user_full_name }}. Вижу, ты потерял доступ в систему.</p>
+        </div>
+        <div class="keystone-content">
+            <p>Для восстановления доступа перейди по ссылке, введи новый пароль и доступ будет восстановлен:</p>
+            <a href="{{ access_restore_url }}">Изменить пароль</a>
+        </div>
+    </div>
+</body>
+</html>

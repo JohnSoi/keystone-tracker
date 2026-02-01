@@ -8,7 +8,7 @@ indent-string = "    "  # 4 пробела
 single-line-if-stmt = no
 
 [MASTER]
-ignore-paths=app/tests/
+ignore-paths=app/tests/,app/worker/
 
 [MESSAGES CONTROL]
 disable=import-error

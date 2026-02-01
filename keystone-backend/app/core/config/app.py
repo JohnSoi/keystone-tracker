@@ -1,3 +1,4 @@
+# mypy: disable_error_code="call-arg"
 """Модуль конфигурации приложения."""
 
 from datetime import date
@@ -19,6 +20,8 @@ class AppSettings(BaseSettings):
         APP_VERSION (str): Версия приложения.
 
         DEBUG (bool): Флаг режима отладки.
+        BACKEND_URL (str): URL бэкенда.
+        FRONTEND_URL (str): URL фронтенда.
 
         SECRET_KEY (str): Секретный ключ для шифрования токенов.
             Используется для подписи JWT токенов.
@@ -31,6 +34,15 @@ class AppSettings(BaseSettings):
         DATABASE_USER (str): Имя пользователя базы данных.
         DATABASE_PASSWORD (str): Пароль пользователя базы данных.
 
+        EMAIL_HOST (str): Хост почтового сервера.
+        EMAIL_PORT (int): Порт почтового сервера.
+        EMAIL_USERNAME (str): Имя пользователя почтового сервера.
+        EMAIL_PASSWORD (str): Пароль пользователя почтового сервера.
+
+        REDIS_HOST (str): Хост редиса.
+        REDIS_PORT (int): Порт редиса.
+        REDIS_DB (int): Номер базы данных редиса.
+
     Examples:
         >>> # Создание кешируемой функции получения настроек приложения
         >>> @lru_cache()
@@ -41,10 +53,12 @@ class AppSettings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore", case_sensitive=True)
 
-    APP_NAME: str = "KeyStone API"
+    APP_NAME: str = "KeyStone"
     APP_VERSION: str = ""
 
     DEBUG: bool = False
+    BACKEND_URL: str = "http://localhost:8000"
+    FRONTEND_URL: str = "http://localhost:8080"
 
     DATABASE_HOST: str = "localhost"
     DATABASE_PORT: int = 5432
@@ -56,6 +70,25 @@ class AppSettings(BaseSettings):
     SECRET_KEY: str = "your-secret-key-change-in-production"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+
+    EMAIL_HOST: str
+    EMAIL_PORT: int = 465
+    EMAIL_USERNAME: str
+    EMAIL_PASSWORD: str
+
+    REDIS_HOST: str = "127.0.0.1"
+    REDIS_PORT: int = 6379
+    REDIS_DB: int = 0
+
+    @property
+    def redis_url(self) -> str:
+        """
+        Возвращает URL для подключения к Redis.
+
+        Returns:
+            (str): URL для подключения к Redis.
+        """
+        return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/{self.REDIS_DB}"
 
     @field_validator("APP_VERSION", mode="before")
     @classmethod

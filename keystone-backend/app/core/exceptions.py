@@ -29,7 +29,7 @@ class BaseHttpException(HTTPException):
 class NotValidEntityException(BaseHttpException):
     """Исключение для некорректных данных в запросе."""
 
-    _STATUS_CODE = status.HTTP_422_UNPROCESSABLE_ENTITY
+    _STATUS_CODE = status.HTTP_422_UNPROCESSABLE_CONTENT
     _MESSAGE = "Некорректные данные в запросе"
 
 
