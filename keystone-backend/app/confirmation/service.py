@@ -59,7 +59,9 @@ class ConfirmService(BaseService[ConfirmationRepository, ConfirmationData, Confi
 
         return user_id
 
-    async def _after_operation(self, entity: DataModel, _: ConfirmationData | None, operation: ServiceOperation) -> None:
+    async def _after_operation(
+        self, entity: DataModel, _: ConfirmationData | None, operation: ServiceOperation
+    ) -> None:
         """Метод обработки после операций."""
         match operation:
             case ServiceOperation.CREATE:

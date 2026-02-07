@@ -21,7 +21,6 @@ from .repository import UserRepository
 from .schemas import UserAccessData, UserAuthResponseData, UserRegisterData
 from .validators import validate_email
 
-
 UserInputData = TypeVar("UserInputData", bound=BaseModel)
 
 

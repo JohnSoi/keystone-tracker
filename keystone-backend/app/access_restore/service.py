@@ -57,7 +57,9 @@ class AccessRestoreService(BaseService[AccessRestoreRepository, AccessRestoreDat
 
         return int(str(token_data.user_id))
 
-    async def _after_operation(self, entity: DataModel, _: AccessRestoreData | None, operation: ServiceOperation) -> None:
+    async def _after_operation(
+        self, entity: DataModel, _: AccessRestoreData | None, operation: ServiceOperation
+    ) -> None:
         """Метод обработки после операций."""
         match operation:
             case ServiceOperation.CREATE:
