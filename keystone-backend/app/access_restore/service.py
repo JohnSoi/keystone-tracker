@@ -11,7 +11,7 @@ from app.worker.tasks import send_access_restore_email
 from .consts import EXPIRED_ACCESS_RESTORE_TOKEN_HOURS
 from .exceptions import ExpiredRestoreTokenException, InvalidRestoreTokenException, TokenUsedException
 from .model import AccessRestore as AccessRestoreModel
-from .repositories import AccessRestoreRepository
+from .repository import AccessRestoreRepository
 from .schemas import AccessRestoreData
 
 

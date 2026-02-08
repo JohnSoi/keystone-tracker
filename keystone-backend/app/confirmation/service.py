@@ -11,7 +11,7 @@ from app.worker import send_confirmation_email
 from .consts import EXPIRED_CONFIRM_TOKEN_DAYS
 from .exceptions import ExpiredConfirmationTokenException, InvalidConfirmTokenException, TokenUsedException
 from .model import Confirmation as ConfirmationModel
-from .repositories import ConfirmationRepository
+from .repository import ConfirmationRepository
 from .schemas import ConfirmationData
 
 
