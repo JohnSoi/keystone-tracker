@@ -55,7 +55,6 @@ async def status_page(db_session: AsyncSession = Depends(get_db)):
 
     result: dict[str, str] = {
         "app_start": "ok",
-        "database_url": str(app_settings.DATABASE_URL)
     }
 
     try:
